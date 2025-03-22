@@ -10,20 +10,21 @@
 
   <body>
     <h1>TV Show Episodes</h1>
+    <!-- Dropdown for selecting shows -->
+    <label for="show-select">Select a Show:</label>
+    <select id="show-select">
+      <option value="">Loading shows...</option>
+    </select>
+    <!-- Search box -->
     <label for="search-input">Search Episodes:</label>
     <input
       type="text"
       id="search-input"
       placeholder="Search by name or summary..."
     />
-
     <p id="episode-count"></p>
     <div id="root"></div>
-
-    <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <!-- <script src="episodes.js"></script> -->
-
-    <!-- Loads YOUR javascript code -->
+    <!-- Loads YOUR JavaScript code -->
     <script src="script.js"></script>
   </body>
 </html>
