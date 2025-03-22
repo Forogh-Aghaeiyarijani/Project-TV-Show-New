@@ -1,19 +1,35 @@
-//You can edit ALL of the code here
 let allEpisodes = [];
 
+async function fetchEpisodes() {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = "<p>Loading episodes...</p>";
+
+  try {
+    const response = await fetch("https://api.tvmaze.com/shows/82/episodes");
+    if (!response.ok) {
+      throw new Error(`Failed to load episodes: ${response.statusText}`);
+    }
+
+    allEpisodes = await response.json();
+    makePageForEpisodes(allEpisodes);
+  } catch (error) {
+    rootElem.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+  }
+}
+
 function setup() {
-  allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  fetchEpisodes();
 
   const searchInput = document.getElementById("search-input");
-  searchInput.addEventListener("input", function () {
+  searchInput.addEventListener("input", () => {
     const searchTerm = searchInput.value.toLowerCase();
     const filteredEpisodes = allEpisodes.filter((episode) => {
       const nameMatch = episode.name.toLowerCase().includes(searchTerm);
-      const summaryMatch = episode.summary.toLowerCase().includes(searchTerm);
+      const summaryMatch = episode.summary
+        ? episode.summary.toLowerCase().includes(searchTerm)
+        : false;
       return nameMatch || summaryMatch;
     });
-
     makePageForEpisodes(filteredEpisodes);
   });
 }
@@ -50,3 +66,6 @@ function makePageForEpisodes(episodeList) {
 }
 
 window.onload = setup;
+
+
+   
